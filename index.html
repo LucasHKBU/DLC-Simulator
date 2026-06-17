@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>DLC Simulator</title>    <!-- This chnage the title in the tab-->
+<link rel="stylesheet" href="style.css">
+
+
+</head>
+
+
+<body>
+<div id="app">
+    <div id="dashboard">
+        <!-- this is the left panel for data input-->
+         <h2>Simulation Parameters</h2>
+         <div class="input-group">
+            <label for="instrument">Underlying Asset</label>
+            <select id="instrument">
+                <option value="HSI">Hang Seng Index (HSI)</option>
+                <option value="STI">Straits Times Index (STI)</option>
+                <option value="NDX">Nasdaq Mini (NDX)</option>
+                <option value="DBS">DBS Group (DBS)</option>
+                <option value="SGT">Singtel (SGT)</option>
+            </select>
+         </div>
+         <div class="input-group">
+            <label for="leverage">Leverage Factor</label>
+            <select id="leverage">
+                <option value="2">2x</option>
+                <option value="3">3x</option>
+                <option value="5">5x</option>
+                <option value="7">7x</option>
+            </select>
+         </div>
+         <div class="input-group">
+            <label for="direction">Direction</label>
+            <select id="direction">
+                <option value="long">Long</option>
+                <option value="short">Short</option>
+            </select>
+         </div>
+         <div>
+            <!--Scenario Presets-->
+            <div class="fee-divider">
+               <span>Scenario Presets</span>
+            </div>
+            <div id="preset-buttons">
+               <button class="preset-btn"
+                  data-date="2026-03-31" data-expiry="21" data-instrument="NDX" 
+                  data-leverage="5" data-direction="long">Bull Run</button>
+               <button class="preset-btn"
+                  data-date="2026-05-21" data-expiry="10" data-instrument="SGT"
+                  data-leverage="5" data-direction="long">Sharp Selloff</button>
+               <button class="preset-btn"
+                  data-date="2026-03-17" data-expiry="21" data-instrument="HSI"
+                  data-leverage="7" data-direction="long"> Volatile Market</button>
+               <button class="preset-btn"
+                  data-date="2030-01-01" data-expiry="1" data-instrument="DEMO"
+                  data-leverage="5" data-direction="long"> Airbag Trigger</button>
+            </div>
+         </div>
+         <div class="input-group">
+            <label for="start-date">Start Date</label>
+            <input type="date" id="start-date"
+               value="2025-12-01"
+               min="2025-12-01"
+               max="2026-06-09">
+         </div>
+         <div class="input-group">
+            <label for="expiry">Holding Period</label>
+            <select id="expiry">
+                <option value="1">1 Day</option>
+                <option value="2">2 Days</option>
+                <option value="3">3 Days</option>
+                <option value="5">1 Week</option>
+                <option value="10">2 Weeks</option>
+                <option value="21">1 Month</option>
+                <option value="126">Full Range (126 days)</option>
+            </select>
+         </div>
+         <div class="input-group">
+            <label for="capital">Starting Capital (SGD)</label>
+            <input type="number" id="capital" value="10000" min="100" max="1000000">
+         </div>
+
+         <!-- Below is the area to manage fees-->
+         <div class="fee-divider">
+            <span>Fee Parameters</span>
+         </div>
+         <div class="input-group">
+            <label for="fee-management">Management Fee (% p.a.)</label>
+            <input type="number" id="fee-management" value="0.40" min="0" max="5.00" step="0.01">
+         </div>
+         <div class="input-group">
+            <label for="gap-premium">Gap Premium (% p.a.)</label>
+            <input type="number" id="gap-premium" value="3.00" min="0" max="6.00" step="0.01">
+         </div>
+         <div class="input-group">
+            <label for="funding-cost">Funding Cost (% p.a.)</label>
+            <input type="number" id="funding-cost" value="1.50" min="0" max="5.00" step="0.01">
+         </div>
+         <div class="input-group">
+            <label for="rebalancing-cost">Rebalancing Cost (% p.a.)</label>
+            <input type="number" id="rebalancing-cost" value="0.10" min="0" max="3.00" step="0.01">
+         </div>
+
+         <!--Buttons Area-->
+         <div id="button-group">
+            <button id="btn-generate">Generate</button>
+
+            <button id="btn-reset">Reset</button>
+            
+         </div>
+    </div>
+
+
+    <div id="results">
+        <!-- this is the right panel for the charts & table & the results-->
+
+        <div id="chart-container">
+            <h2 id="chart-title">DLC Price over time</h2>
+            <div id="decay-tracker"></div>
+            <div id="synthetic-warning" style="display:none;">
+                  This scenatio uses synthetic data for demonstration purposes and not real market data.
+            </div>
+            <div id="chart-canvas-wrapper">
+               <canvas id="myChart"></canvas>
+               <div id="loading-indicator">
+                  <div class="spinner"></div>
+                  <p>Computing simulation ...</p>
+            </div>
+            </div>
+        </div>
+
+        <div id="table-container">
+            <h2>Cumulative Returns</h2>
+            <div id="table-content"></div>
+        </div>
+        
+        <div id="stats-container">
+            <h2>Logs</h2>
+            <div id="stats-content"></div>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+<script src="script.js"></script>
+</body>
+
+</html>
